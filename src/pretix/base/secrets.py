@@ -125,11 +125,17 @@ class RandomTicketSecretGenerator(BaseTicketSecretGenerator):
                         current_secret: str = None, force_invalidate=False) -> str:
         if current_secret and not force_invalidate:
             return current_secret
-        return get_random_string(
-            length=self.event.settings.ticket_secret_length,
+        # print ('9' + get_random_string(
+        #     length=self.event.settings.ticket_secret_length - 1 if self.event.settings.ticket_secret_length > 0 else self.event.settings.ticket_secret_length,
+        #     # Exclude o,0,1,i,l to avoid confusion with bad fonts/printers
+        #     allowed_chars='0123456789'
+        # ))
+        return ('9' + get_random_string(
+            # Set length as (admin provided secret length - 1), because we are appending a 9
+            length=self.event.settings.ticket_secret_length - 1 if self.event.settings.ticket_secret_length > 0 else self.event.settings.ticket_secret_length,
             # Exclude o,0,1,i,l to avoid confusion with bad fonts/printers
-            allowed_chars='abcdefghjkmnpqrstuvwxyz23456789'
-        )
+            allowed_chars='0123456789'
+        ))
 
 
 class Sig1TicketSecretGenerator(BaseTicketSecretGenerator):

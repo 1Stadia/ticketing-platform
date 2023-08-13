@@ -95,6 +95,7 @@ else:
             except AttributeError:
                 pass  # os.chown is not available on Windows
             f.write(SECRET_KEY)
+print(SECRET_KEY, "This is the secrert key")
 
 # Adjustable settings
 
